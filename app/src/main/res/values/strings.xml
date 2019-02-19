@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="no_internet_connection">Please check your internet connection and try again.</string>
+    <string name="thumbnail_content_description">This is the thumbnail of the movie</string>
+
+    <!--settings-->
+    <string name="action_settings">Settings</string>
+
+    <!--preferences-->
+    <string name="pref_sort_order_label">Sort Order</string>
+    <string name="pref_sort_order_most_popular_label">Most Popular</string>
+    <string name="pref_sort_order_top_rated_label">Top Rated</string>
+    <string name="pref_sort_order_key" translatable="false">Top Rated</string>
+    <string name="pref_sort_order_most_popular_value" translatable="false">popular</string>
+    <string name="pref_sort_order_top_rated_value" translatable="false">top_rated</string>
+    <string name="pref_sort_order_default" translatable="false">@string/pref_sort_order_most_popular_value</string>
+</resources>

@@ -9,8 +9,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
+@SuppressWarnings("unused")
 public class Result implements Parcelable {
 
     @SerializedName("vote_count")
@@ -58,7 +58,7 @@ public class Result implements Parcelable {
 
     public Result() {}
 
-    public Result(Parcel in) {
+    private Result(Parcel in) {
         voteCount = in.readInt();
         id = in.readInt();
         video = in.readByte() != 0;
@@ -186,18 +186,6 @@ public class Result implements Parcelable {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).append("voteCount", voteCount)
-                .append("id", id).append("video", video)
-                .append("voteAverage", voteAverage).append("title", title)
-                .append("popularity", popularity).append("posterPath", posterPath)
-                .append("originalLanguage", originalLanguage)
-                .append("originalTitle", originalTitle).append("genreIds", genreIds)
-                .append("backdropPath", backdropPath).append("adult", adult)
-                .append("overview", overview).append("releaseDate", releaseDate).toString();
     }
 
     @Override

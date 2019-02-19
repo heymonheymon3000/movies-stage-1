@@ -9,7 +9,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class MovieResponse implements Parcelable {
 
@@ -24,37 +23,44 @@ public class MovieResponse implements Parcelable {
     private Integer totalPages;
     @SerializedName("results")
     @Expose
-    private List<Result> results = new ArrayList<Result>();
+    private List<Result> results = new ArrayList<>();
 
+    @SuppressWarnings("unused")
     public MovieResponse() {}
 
-    public MovieResponse(Parcel in) {
+    private MovieResponse(Parcel in) {
         page = in.readInt();
         totalResults = in.readInt();
         totalPages = in.readInt();
         results = in.createTypedArrayList(Result.CREATOR);
     }
 
+    @SuppressWarnings("unused")
     public Integer getPage() {
         return page;
     }
 
+    @SuppressWarnings("unused")
     public void setPage(Integer page) {
         this.page = page;
     }
 
+    @SuppressWarnings("unused")
     public Integer getTotalResults() {
         return totalResults;
     }
 
+    @SuppressWarnings("unused")
     public void setTotalResults(Integer totalResults) {
         this.totalResults = totalResults;
     }
 
+    @SuppressWarnings("unused")
     public Integer getTotalPages() {
         return totalPages;
     }
 
+    @SuppressWarnings("unused")
     public void setTotalPages(Integer totalPages) {
         this.totalPages = totalPages;
     }
@@ -63,6 +69,7 @@ public class MovieResponse implements Parcelable {
         return results;
     }
 
+    @SuppressWarnings("unused")
     public void setResults(List<Result> results) {
         this.results = results;
     }
@@ -92,14 +99,6 @@ public class MovieResponse implements Parcelable {
             return new MovieResponse[size];
         }
     };
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).append("page", page)
-                .append("totalResults", totalResults)
-                .append("totalPages", totalPages)
-                .append("results", results).toString();
-    }
 
     @Override
     public int hashCode() {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,6 +38,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MovieActivity extends AppCompatActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener,
         MovieAdaptor.MovieClickListener {
+    @SuppressWarnings("unused")
     private final static String TAG = MovieActivity.class.getSimpleName();
 
     @BindView(R.id.rv_movies)
@@ -135,7 +137,11 @@ public class MovieActivity extends AppCompatActivity
 
                 @Override
                 public void onComplete() {
-                    movieAdaptor.setResults(results.toArray(new Result[results.size()]));
+                    Result[] r = new Result[results.size()];
+                    for(int i = 0; i < results.size(); i++) {
+                        r[i] = results.get(i);
+                    }
+                    movieAdaptor.setResults(r);
                     setTitle(getTitle());
                 }
 
@@ -151,6 +157,7 @@ public class MovieActivity extends AppCompatActivity
 
     @Override
     public void onMovieClickListener(Result result) {
+        Log.i(TAG, result.getPosterPath());
         Intent startMovieDetailsActivity = new Intent(this, MovieDetailsActivity.class);
         startActivity(startMovieDetailsActivity);
     }

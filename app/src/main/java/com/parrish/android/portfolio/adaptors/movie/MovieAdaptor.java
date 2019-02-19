@@ -18,11 +18,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.MovieViewHolder> {
+    @SuppressWarnings("unused")
     private final static String TAG = MovieAdaptor.class.getSimpleName();
 
     private Result[] mResults;
     private final Context mContext;
-    final private MovieClickListener mOnMovieClickListener;
+    private final MovieClickListener mOnMovieClickListener;
 
     public interface MovieClickListener {
         void onMovieClickListener(Result result);
@@ -53,6 +54,7 @@ public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.MovieViewHol
 
     private String getThumbNailURL(Result result) {
         Uri.Builder builder = new Uri.Builder();
+        //noinspection SpellCheckingInspection
         builder.scheme("http")
             .path("image.tmdb.org/t/p")
             .appendPath("w342")

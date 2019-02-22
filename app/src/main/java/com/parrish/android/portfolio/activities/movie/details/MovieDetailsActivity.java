@@ -1,5 +1,6 @@
 package com.parrish.android.portfolio.activities.movie.details;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -7,10 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.squareup.picasso.Callback;
 
 import com.parrish.android.portfolio.BuildConfig;
 import com.parrish.android.portfolio.adaptors.movie.details.MovieTrailersAdaptor;
@@ -71,6 +78,7 @@ public class MovieDetailsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
+        supportPostponeEnterTransition();
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
@@ -78,8 +86,46 @@ public class MovieDetailsActivity extends AppCompatActivity
             Result result = intent.getParcelableExtra(Intent.EXTRA_TEXT);
 
             movieDetailsTitleTextView.setText(result.getTitle());
+            movieThumbnailImageView.setTransitionName(result.getTitle());
+
             Picasso.get().load(Helper.getThumbNailURL(result))
-                    .into(movieThumbnailImageView);
+                .into(movieThumbnailImageView, new Callback(){
+                    @Override
+                    public void onSuccess() {
+                        supportStartPostponedEnterTransition();
+                        scheduleStartPostponedTransition(movieThumbnailImageView);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        supportStartPostponedEnterTransition();
+                        scheduleStartPostponedTransition(movieThumbnailImageView);
+                    }
+
+                    /**
+                     * Schedules the shared element transition to be started immediately
+                     * after the shared element has been measured and laid out within the
+                     * activity's view hierarchy. Some common places where it might make
+                     * sense to call this method are:
+                     *
+                     * (1) Inside a Fragment's onCreateView() method (if the shared element
+                     *     lives inside a Fragment hosted by the called Activity).
+                     *
+                     * (2) Inside a Picasso Callback object (if you need to wait for Picasso to
+                     *     asynchronously load/scale a bitmap before the transition can begin).
+                     **/
+                    private void scheduleStartPostponedTransition(final View sharedElement) {
+                        sharedElement.getViewTreeObserver().addOnPreDrawListener(
+                            new ViewTreeObserver.OnPreDrawListener() {
+                                @Override
+                                public boolean onPreDraw() {
+                                    sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                                    startPostponedEnterTransition();
+                                    return true;
+                                }
+                            });
+                    }
+                });
             movieYear.setText(getYear(result.getReleaseDate()));
             setMovieDuration(result.getId());
             movieRating.setText(getVoteAverage(result.getVoteAverage()));
@@ -94,6 +140,10 @@ public class MovieDetailsActivity extends AppCompatActivity
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        Animation animFadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in);
+        View view = findViewById(R.id.container);
+        view.startAnimation(animFadeIn);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.parrish.android.portfolio.adaptors.movie;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import com.parrish.android.portfolio.models.movie.Result;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.internal.Utils;
 
 public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.MovieViewHolder> {
     @SuppressWarnings("unused")
@@ -26,7 +28,7 @@ public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.MovieViewHol
     private final MovieClickListener mOnMovieClickListener;
 
     public interface MovieClickListener {
-        void onMovieClickListener(Result result);
+        void onMovieClickListener(Result result, View view);
     }
 
     public MovieAdaptor(Context context, MovieClickListener movieClickListener) {
@@ -50,6 +52,8 @@ public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.MovieViewHol
     public void onBindViewHolder(@NonNull MovieViewHolder movieViewHolder, int i) {
         Picasso.get().load(Helper.getThumbNailURL(mResults[i]))
                 .into(movieViewHolder.mMovieThumbnail);
+        ViewCompat.setTransitionName(movieViewHolder.mMovieThumbnail,
+                mResults[i].getTitle());
     }
 
     @Override
@@ -78,7 +82,7 @@ public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.MovieViewHol
         public void onClick(View view) {
             int position = getAdapterPosition();
             Result result = mResults[position];
-            mOnMovieClickListener.onMovieClickListener(result);
+            mOnMovieClickListener.onMovieClickListener(result, view);
         }
     }
 }

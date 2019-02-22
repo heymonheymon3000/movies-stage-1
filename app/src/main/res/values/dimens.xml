@@ -24,4 +24,7 @@
     <dimen name="trailer_title_margin_end">36dp</dimen>
     <dimen name="trailer_title_margin_start">24dp</dimen>
     <dimen name="trailer_title_margin_top">24dp</dimen>
+    <dimen name="fav_button_text_size">8sp</dimen>
+    <dimen name="fav_button_min_height">24dp</dimen>
+    <dimen name="fav_button_min_width">72dp</dimen>
 </resources>

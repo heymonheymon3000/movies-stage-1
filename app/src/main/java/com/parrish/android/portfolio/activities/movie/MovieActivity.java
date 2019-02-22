@@ -2,6 +2,7 @@ package com.parrish.android.portfolio.activities.movie;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.parrish.android.portfolio.BuildConfig;
@@ -18,10 +20,11 @@ import com.parrish.android.portfolio.activities.movie.details.MovieDetailsActivi
 import com.parrish.android.portfolio.activities.settings.SettingsActivity;
 import com.parrish.android.portfolio.adaptors.movie.MovieAdaptor;
 
+import android.support.v4.util.Pair;
+
 import com.parrish.android.portfolio.helpers.Helper;
 import com.parrish.android.portfolio.interfaces.MovieService;
 import com.parrish.android.portfolio.models.movie.MovieResponse;
-import com.parrish.android.portfolio.models.movie.details.Genre;
 import com.parrish.android.portfolio.models.movie.Result;
 import com.parrish.android.portfolio.network.ApiUtils;
 
@@ -37,7 +40,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MovieActivity extends AppCompatActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener,
-        MovieAdaptor.MovieClickListener {
+        MovieAdaptor.MovieClickListener{
     @SuppressWarnings("unused")
     private final static String TAG = MovieActivity.class.getSimpleName();
 
@@ -156,9 +159,12 @@ public class MovieActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMovieClickListener(Result result) {
+    public void onMovieClickListener(Result result, View view) {
+        Pair<View, String> p1 = Pair.create(view, result.getTitle());
+        @SuppressWarnings("unchecked") ActivityOptionsCompat options =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this,p1);
         Intent startMovieDetailsActivity = new Intent(this, MovieDetailsActivity.class);
         startMovieDetailsActivity.putExtra(Intent.EXTRA_TEXT, result);
-        startActivity(startMovieDetailsActivity);
+        startActivity(startMovieDetailsActivity, options.toBundle());
     }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--activity_movie_details.xml-->
+    <dimen name="mv_thumbnail_margin_start">16dp</dimen>
+    <dimen name="mv_thumbnail_margin_end">16dp</dimen>
+    <dimen name="mv_thumbnail_margin_top">8dp</dimen>
+    <dimen name="mv_thumbnail_margin_bottom">8dp</dimen>
+    <dimen name="mv_year_margin_top">10dp</dimen>
+    <dimen name="mv_description_margin_start">8dp</dimen>
+    <dimen name="mv_description_margin_end">8dp</dimen>
+    <dimen name="mv_description_margin_top">24dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="divider_margin_start">8dp</dimen>
+    <dimen name="divider_margin_end">8dp</dimen>
+    <dimen name="divider_margin_top">8dp</dimen>
+    <dimen name="trailers_tv_margin_start">8dp</dimen>
+    <dimen name="trailers_tv_margin_end">8dp</dimen>
+    <dimen name="trailers_tv_margin_top">8dp</dimen>
+    <dimen name="rv_margin_start">8dp</dimen>
+    <dimen name="rv_margin_end">8dp</dimen>
+    <dimen name="trailer_divider_margin_top">24dp</dimen>
+    <dimen name="trailer_divider_margin_start">4dp</dimen>
+    <dimen name="trailer_divider_margin_end">4dp</dimen>
+    <dimen name="trailer_title_margin_end">36dp</dimen>
+    <dimen name="trailer_title_margin_start">24dp</dimen>
+    <dimen name="trailer_title_margin_top">24dp</dimen>
+</resources>

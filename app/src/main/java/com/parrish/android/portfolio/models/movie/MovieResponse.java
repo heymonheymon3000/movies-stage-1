@@ -1,14 +1,16 @@
-package com.parrish.android.portfolio.models;
+package com.parrish.android.portfolio.models.movie;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieResponse implements Parcelable {
 

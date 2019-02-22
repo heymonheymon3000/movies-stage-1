@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,8 +20,9 @@ import com.parrish.android.portfolio.adaptors.movie.MovieAdaptor;
 
 import com.parrish.android.portfolio.helpers.Helper;
 import com.parrish.android.portfolio.interfaces.MovieService;
-import com.parrish.android.portfolio.models.MovieResponse;
-import com.parrish.android.portfolio.models.Result;
+import com.parrish.android.portfolio.models.movie.MovieResponse;
+import com.parrish.android.portfolio.models.movie.details.Genre;
+import com.parrish.android.portfolio.models.movie.Result;
 import com.parrish.android.portfolio.network.ApiUtils;
 
 import java.util.ArrayList;
@@ -157,8 +157,8 @@ public class MovieActivity extends AppCompatActivity
 
     @Override
     public void onMovieClickListener(Result result) {
-        Log.i(TAG, result.getPosterPath());
         Intent startMovieDetailsActivity = new Intent(this, MovieDetailsActivity.class);
+        startMovieDetailsActivity.putExtra(Intent.EXTRA_TEXT, result);
         startActivity(startMovieDetailsActivity);
     }
 }

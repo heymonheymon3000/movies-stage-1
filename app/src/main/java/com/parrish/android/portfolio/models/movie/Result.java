@@ -1,4 +1,4 @@
-package com.parrish.android.portfolio.models;
+package com.parrish.android.portfolio.models.movie;
 
 import android.os.Parcel;
 import android.os.Parcelable;

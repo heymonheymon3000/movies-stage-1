@@ -8,10 +8,10 @@
     tools:context="com.parrish.android.portfolio.activities.movie.details.MovieDetailsActivity">
 
     <TextView
-        android:id="@+id/detail_movie_title"
+        android:id="@+id/movie_details_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@drawable/movie_header_selector"
         android:padding="24dp"
         android:textStyle="bold"
         android:textSize="24sp"
@@ -20,5 +20,97 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Lord of the Rings"/>
+
+    <ImageView
+        android:id="@+id/movie_thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/mv_thumbnail_margin_start"
+        android:layout_marginEnd="@dimen/mv_thumbnail_margin_end"
+        android:layout_marginTop="@dimen/mv_thumbnail_margin_top"
+        android:layout_marginBottom="@dimen/mv_thumbnail_margin_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_details_title"/>
+
+    <TextView
+        android:id="@+id/movie_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mv_year_margin_top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_details_title"/>
+
+    <TextView
+        android:id="@+id/movie_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/movie_year"
+        app:layout_constraintTop_toBottomOf="@+id/movie_year"/>
+
+    <TextView
+        android:id="@+id/movie_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/movie_year"
+        app:layout_constraintTop_toBottomOf="@+id/movie_duration"/>
+
+    <Button
+        android:id="@+id/movie_favorite_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mark_movie_favorite"
+        android:gravity="center|center_horizontal"
+        android:lines="2"
+        android:textSize="8sp"
+        android:minHeight="24dp"
+        android:minWidth="72dp"
+        android:foregroundGravity="left"
+        android:background="@drawable/movie_header_selector"
+        app:layout_constraintStart_toStartOf="@+id/movie_year"
+        app:layout_constraintTop_toBottomOf="@+id/movie_rating"/>
+
+    <TextView
+        android:id="@+id/movie_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/mv_description_margin_top"
+        android:layout_marginStart="@dimen/mv_description_margin_start"
+        android:layout_marginEnd="@dimen/mv_description_margin_start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_thumbnail"/>
+
+    <View
+        android:id="@+id/divider_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@android:color/white"
+        android:layout_marginTop="@dimen/divider_margin_top"
+        android:layout_marginStart="@dimen/divider_margin_start"
+        android:layout_marginEnd="@dimen/divider_margin_end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_description"/>
+
+    <TextView
+        android:id="@+id/trailers_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/trailers_tv_margin_start"
+        android:layout_marginEnd="@dimen/trailers_tv_margin_end"
+        android:layout_marginTop="@dimen/trailers_tv_margin_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_view"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/trailers_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/rv_margin_start"
+        android:layout_marginEnd="@dimen/rv_margin_end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trailers_tv">
+    </android.support.v7.widget.RecyclerView>
+
+
 
 </android.support.constraint.ConstraintLayout>

@@ -1,7 +1,6 @@
 package com.parrish.android.portfolio.adaptors.movie;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -11,9 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.parrish.android.portfolio.R;
+import com.parrish.android.portfolio.helpers.Helper;
 import com.squareup.picasso.Picasso;
 
-import com.parrish.android.portfolio.models.Result;
+import com.parrish.android.portfolio.models.movie.Result;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -48,20 +48,8 @@ public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder movieViewHolder, int i) {
-        Picasso.get().load(getThumbNailURL(mResults[i]))
+        Picasso.get().load(Helper.getThumbNailURL(mResults[i]))
                 .into(movieViewHolder.mMovieThumbnail);
-    }
-
-    private String getThumbNailURL(Result result) {
-        Uri.Builder builder = new Uri.Builder();
-        //noinspection SpellCheckingInspection
-        builder.scheme("http")
-            .path("image.tmdb.org/t/p")
-            .appendPath("w342")
-            .appendPath(result.getPosterPath().replace("/",""));
-        Uri thumbNailUri = builder.build();
-
-        return thumbNailUri.toString();
     }
 
     @Override

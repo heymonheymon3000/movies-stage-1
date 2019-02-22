@@ -3,6 +3,11 @@
     <string name="no_internet_connection">Please check your internet connection and try again.</string>
     <string name="thumbnail_content_description">This is the thumbnail of the movie</string>
 
+    <!--movieDetailsActivity.xml-->
+    <string name="mark_movie_favorite">MARK AS\nFAVORITE</string>
+    <string name="trailers">Trailers:</string>
+
+
     <!--settings-->
     <string name="action_settings">Settings</string>
 

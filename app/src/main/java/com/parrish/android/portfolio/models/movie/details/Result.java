@@ -1,9 +1,12 @@
 package com.parrish.android.portfolio.models.movie.details;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+public class Result implements Parcelable {
     @Expose
     private String id;
     @SerializedName("iso_639_1")
@@ -27,6 +30,19 @@ public class Result {
     @SerializedName("type")
     @Expose
     private String type;
+
+    public Result() {}
+
+    public Result(Parcel in) {
+        id = in.readString();
+        iso6391 = in.readString();
+        iso31661 = in.readString();
+        key = in.readString();
+        name = in.readString();
+        site = in.readString();
+        size = in.readInt();
+        type = in.readString();
+    }
 
     public String getId() {
         return id;
@@ -91,4 +107,33 @@ public class Result {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(iso6391);
+        parcel.writeString(iso31661);
+        parcel.writeString(key);
+        parcel.writeString(name);
+        parcel.writeString(site);
+        parcel.writeInt(size);
+        parcel.writeString(type);
+    }
+
+    public static final Creator<Result> CREATOR = new Creator<Result>() {
+        @Override
+        public Result createFromParcel(Parcel parcel) {
+            return new Result(parcel);
+        }
+
+        @Override
+        public Result[] newArray(int size) {
+            return new Result[size];
+        }
+    };
 }

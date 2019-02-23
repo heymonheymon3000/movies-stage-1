@@ -2,6 +2,7 @@ package com.parrish.android.portfolio.activities.movie.details;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -74,6 +76,8 @@ public class MovieDetailsActivity extends AppCompatActivity
 
     private MovieTrailersAdaptor movieTrailersAdaptor;
 
+    private final static String RESULT_CACHE_KEY = "RESULT_CACHE_KEY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +136,18 @@ public class MovieDetailsActivity extends AppCompatActivity
             movieDescription.setText(result.getOverview());
             trailersTextView.setText(getString(R.string.trailers));
             setupRecyclerView();
-            loadTrailers(result.getId());
+
+            if(savedInstanceState == null || !savedInstanceState.containsKey(RESULT_CACHE_KEY)) {
+                loadTrailers(result.getId());
+            } else {
+                movieTrailersAdaptor.setResults(
+                    (com.parrish.android.portfolio.models.movie.details.Result[])
+                        savedInstanceState.getParcelableArray(RESULT_CACHE_KEY));
+            }
+
+            Animation animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+            View view = findViewById(R.id.container);
+            view.startAnimation(animFadeIn);
         }
 
         ActionBar actionBar = this.getSupportActionBar();
@@ -140,10 +155,12 @@ public class MovieDetailsActivity extends AppCompatActivity
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
 
-        Animation animFadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in);
-        View view = findViewById(R.id.container);
-        view.startAnimation(animFadeIn);
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArray(RESULT_CACHE_KEY, movieTrailersAdaptor.getResults());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -175,7 +192,7 @@ public class MovieDetailsActivity extends AppCompatActivity
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<MovieVideoResponse>() {
-                private com.parrish.android.portfolio.models.movie.details.Result[] retResult = null;
+                private com.parrish.android.portfolio.models.movie.details.Result[] resultCache;
 
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -196,9 +213,9 @@ public class MovieDetailsActivity extends AppCompatActivity
                         }
                     }
 
-                    retResult = new com.parrish.android.portfolio.models.movie.details.Result[transformedResults.size()];
-                    for(int i = 0; i < retResult.length; i++) {
-                        retResult[i] = transformedResults.get(i);
+                    resultCache = new com.parrish.android.portfolio.models.movie.details.Result[transformedResults.size()];
+                    for(int i = 0; i < resultCache.length; i++) {
+                        resultCache[i] = transformedResults.get(i);
                     }
                 }
 
@@ -211,7 +228,7 @@ public class MovieDetailsActivity extends AppCompatActivity
 
                 @Override
                 public void onComplete() {
-                    movieTrailersAdaptor.setResults(retResult);
+                    movieTrailersAdaptor.setResults(resultCache);
                 }
             });
     }

@@ -2,16 +2,20 @@ package com.parrish.android.portfolio.activities.movie;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.PersistableBundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.parrish.android.portfolio.BuildConfig;
@@ -51,6 +55,8 @@ public class MovieActivity extends AppCompatActivity
 
     private String sortOrder;
 
+    private final static String RESULT_CACHE_KEY = "RESULT_CACHE_KEY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +64,17 @@ public class MovieActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setupSharedPreferences();
         setupRecyclerView();
-        loadMovies();
+
+        if(savedInstanceState == null || !savedInstanceState.containsKey(RESULT_CACHE_KEY)) {
+            loadMovies();
+        } else {
+            movieAdaptor.setResults((Result[])
+                    savedInstanceState.getParcelableArray(RESULT_CACHE_KEY));
+        }
+
+        Animation animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        View view = findViewById(R.id.container);
+        view.startAnimation(animFadeIn);
     }
 
     @Override
@@ -93,6 +109,12 @@ public class MovieActivity extends AppCompatActivity
         super.onDestroy();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArray(RESULT_CACHE_KEY, movieAdaptor.getResults());
+        super.onSaveInstanceState(outState);
     }
 
     private void setupRecyclerView() {
@@ -162,7 +184,7 @@ public class MovieActivity extends AppCompatActivity
     public void onMovieClickListener(Result result, View view) {
         Pair<View, String> p1 = Pair.create(view, result.getTitle());
         @SuppressWarnings("unchecked") ActivityOptionsCompat options =
-                ActivityOptionsCompat.makeSceneTransitionAnimation(this,p1);
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this, p1);
         Intent startMovieDetailsActivity = new Intent(this, MovieDetailsActivity.class);
         startMovieDetailsActivity.putExtra(Intent.EXTRA_TEXT, result);
         startActivity(startMovieDetailsActivity, options.toBundle());

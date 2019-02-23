@@ -67,6 +67,10 @@ public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.MovieViewHol
         notifyDataSetChanged();
     }
 
+    public Result[] getResults() {
+        return mResults;
+    }
+
     public class MovieViewHolder extends ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.movie_thumbnail)

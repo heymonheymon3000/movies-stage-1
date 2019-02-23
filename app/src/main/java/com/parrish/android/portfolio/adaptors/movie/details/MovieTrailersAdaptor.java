@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,10 @@ public class MovieTrailersAdaptor extends
     public void setResults(Result[] results) {
         this.mResults = results;
         notifyDataSetChanged();
+    }
+
+    public Result[] getResults() {
+        return mResults;
     }
 
     public class MovieTrailersViewHolder extends ViewHolder {

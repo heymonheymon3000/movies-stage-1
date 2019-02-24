@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -28,8 +29,8 @@ import com.parrish.android.portfolio.models.movie.details.MovieVideoResponse;
 import com.parrish.android.portfolio.network.ApiUtils;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -178,7 +179,7 @@ public class MovieDetailsActivity extends AppCompatActivity
 
     @Override
     public void onTrailerClickListener(com.parrish.android.portfolio.models.movie.details.Result result) {
-
+        Log.i(TAG, "MOVIE ==> " + result.getName() + " was clicked!!!");
     }
 
     private void setupRecyclerView() {
@@ -196,7 +197,7 @@ public class MovieDetailsActivity extends AppCompatActivity
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<MovieVideoResponse>() {
-                private com.parrish.android.portfolio.models.movie.details.Result[] resultCache;
+                private List<com.parrish.android.portfolio.models.movie.details.Result> resultCache;
 
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -205,28 +206,7 @@ public class MovieDetailsActivity extends AppCompatActivity
 
                 @Override
                 public void onNext(MovieVideoResponse movieVideoResponse) {
-                    //TODO: Terry redo this.
-                    List<com.parrish.android.portfolio.models.movie.details.Result> results =
-                        movieVideoResponse.getResults();
-
-                    List<com.parrish.android.portfolio.models.movie.details.Result> transformedResults = new ArrayList<>();
-
-                    for(com.parrish.android.portfolio.models.movie.details.Result result : results) {
-                        if(result.getType().equals("Trailer")) {
-                            transformedResults.add(result);
-                        }
-                    }
-
-                    resultCache = new com.parrish.android.portfolio.models.movie.details.Result[transformedResults.size()];
-                    for(int i = 0; i < resultCache.length; i++) {
-                        resultCache[i] = transformedResults.get(i);
-                    }
-
-                    if(resultCache.length == 0) {
-                        trailersTextView.setVisibility(View.INVISIBLE);
-                    } else {
-                        trailersTextView.setVisibility(View.VISIBLE);
-                    }
+                    setResultCache(movieVideoResponse);
                 }
 
                 @Override
@@ -238,7 +218,24 @@ public class MovieDetailsActivity extends AppCompatActivity
 
                 @Override
                 public void onComplete() {
-                    movieTrailersAdaptor.setResults(resultCache);
+                    movieTrailersAdaptor.setResults(resultCache
+                        .toArray(new com.parrish.android.portfolio.models.movie.details.Result[resultCache.size()]));
+                }
+
+                private void setResultCache(MovieVideoResponse movieVideoResponse) {
+                    resultCache = movieVideoResponse.getResults().stream().filter(result -> {
+                        if(result.getType().equals(getString(R.string.trailer))) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }).collect(Collectors.toList());
+
+                    if(resultCache.size() == 0) {
+                        trailersTextView.setVisibility(View.INVISIBLE);
+                    } else {
+                        trailersTextView.setVisibility(View.VISIBLE);
+                    }
                 }
             });
     }

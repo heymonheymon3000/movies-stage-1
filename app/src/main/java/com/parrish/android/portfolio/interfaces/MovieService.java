@@ -1,7 +1,6 @@
 package com.parrish.android.portfolio.interfaces;
 
 import com.parrish.android.portfolio.models.movie.MovieResponse;
-import com.parrish.android.portfolio.models.movie.details.Genre;
 import com.parrish.android.portfolio.models.movie.details.MovieDetailsResponse;
 import com.parrish.android.portfolio.models.movie.details.MovieVideoResponse;
 

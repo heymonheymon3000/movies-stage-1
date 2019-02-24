@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 import com.parrish.android.portfolio.models.movie.Result;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.internal.Utils;
 
 public class MovieAdaptor extends RecyclerView.Adapter<MovieAdaptor.MovieViewHolder> {
     @SuppressWarnings("unused")

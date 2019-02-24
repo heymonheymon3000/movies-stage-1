@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +49,12 @@ public class MovieTrailersAdaptor extends
     public void onBindViewHolder(@NonNull MovieTrailersViewHolder movieTrailersViewHolder, int i) {
         Result result = mResults[i];
         movieTrailersViewHolder.trailerTitle.setText(result.getName().trim());
+        movieTrailersViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTrailerClickListener.onTrailerClickListener(result);
+            }
+        });
     }
 
     @Override
@@ -68,8 +73,8 @@ public class MovieTrailersAdaptor extends
     }
 
     public class MovieTrailersViewHolder extends ViewHolder {
-//        @BindView(R.id.play_icon)
-//        public ImageView imageView;
+        @BindView(R.id.play_icon)
+        public ImageView imageView;
 
         @BindView(R.id.trailer_title)
         public TextView trailerTitle;

@@ -18,12 +18,8 @@
         <!-- enable window content transitions -->
         <item name="android:windowContentTransitions">true</item>
 
-         specify enter and exit transitions
-        <item name="android:windowEnterTransition">@transition/change_image_transform</item>
-        <item name="android:windowExitTransition">@transition/change_image_transform</item>
-
         <!-- if we don't specify reenter transition, by default exit transition is taken -->
-        <!-- if we don't specify return transition, by default enter transition is taken -->
+        <!-- if we don't specify return` transition, by default enter transition is taken -->
 
         <!-- specify shared element transitions -->
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>

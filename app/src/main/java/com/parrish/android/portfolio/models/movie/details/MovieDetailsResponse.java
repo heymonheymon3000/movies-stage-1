@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class MovieDetailsResponse {
     @SerializedName("adult")
     @Expose
@@ -142,6 +143,7 @@ public class MovieDetailsResponse {
         return imdbId;
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     public void setImdbId(String imdbId) {
         this.imdbId = imdbId;
     }

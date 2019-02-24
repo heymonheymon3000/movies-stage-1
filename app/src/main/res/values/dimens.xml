@@ -15,7 +15,9 @@
     <dimen name="divider_margin_top">8dp</dimen>
     <dimen name="trailers_tv_margin_start">8dp</dimen>
     <dimen name="trailers_tv_margin_end">8dp</dimen>
-    <dimen name="trailers_tv_margin_top">8dp</dimen>
+    <dimen name="trailers_tv_margin_top">24dp</dimen>
+    <dimen name="trailers_ll_margin_top">8dp</dimen>
+    <dimen name="trailers_ll_margin_bottom">8dp</dimen>
     <dimen name="rv_margin_start">8dp</dimen>
     <dimen name="rv_margin_end">8dp</dimen>
     <dimen name="trailer_divider_margin_top">24dp</dimen>

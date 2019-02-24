@@ -140,14 +140,22 @@ public class MovieDetailsActivity extends AppCompatActivity
             if(savedInstanceState == null || !savedInstanceState.containsKey(RESULT_CACHE_KEY)) {
                 loadTrailers(result.getId());
             } else {
-                movieTrailersAdaptor.setResults(
-                    (com.parrish.android.portfolio.models.movie.details.Result[])
-                        savedInstanceState.getParcelableArray(RESULT_CACHE_KEY));
+                com.parrish.android.portfolio.models.movie.details.Result[] cache =
+                        (com.parrish.android.portfolio.models.movie.details.Result[])
+                                savedInstanceState.getParcelableArray(RESULT_CACHE_KEY);
+                movieTrailersAdaptor.setResults(cache);
+                if(cache.length == 0) {
+                    trailersTextView.setVisibility(View.INVISIBLE);
+                } else {
+                    trailersTextView.setVisibility(View.VISIBLE);
+                }
             }
 
             Animation animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
             View view = findViewById(R.id.container);
             view.startAnimation(animFadeIn);
+
+            setTitle(getString(R.string.movie_details));
         }
 
         ActionBar actionBar = this.getSupportActionBar();
@@ -216,6 +224,12 @@ public class MovieDetailsActivity extends AppCompatActivity
                     resultCache = new com.parrish.android.portfolio.models.movie.details.Result[transformedResults.size()];
                     for(int i = 0; i < resultCache.length; i++) {
                         resultCache[i] = transformedResults.get(i);
+                    }
+
+                    if(resultCache.length == 0) {
+                        trailersTextView.setVisibility(View.INVISIBLE);
+                    } else {
+                        trailersTextView.setVisibility(View.VISIBLE);
                     }
                 }
 

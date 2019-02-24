@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parrish.android.portfolio.R;
@@ -67,6 +68,9 @@ public class MovieTrailersAdaptor extends
     }
 
     public class MovieTrailersViewHolder extends ViewHolder {
+//        @BindView(R.id.play_icon)
+//        public ImageView imageView;
+
         @BindView(R.id.trailer_title)
         public TextView trailerTitle;
 

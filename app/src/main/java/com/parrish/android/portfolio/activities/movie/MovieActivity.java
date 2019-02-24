@@ -2,14 +2,12 @@ package com.parrish.android.portfolio.activities.movie;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.PersistableBundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -56,6 +54,8 @@ public class MovieActivity extends AppCompatActivity
     private String sortOrder;
 
     private final static String RESULT_CACHE_KEY = "RESULT_CACHE_KEY";
+    private final static String SORT_ORDER_KEY = "SORT_ORDER_KEY";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +65,33 @@ public class MovieActivity extends AppCompatActivity
         setupSharedPreferences();
         setupRecyclerView();
 
+        loadMovies();
+
         if(savedInstanceState == null || !savedInstanceState.containsKey(RESULT_CACHE_KEY)) {
             loadMovies();
         } else {
-            movieAdaptor.setResults((Result[])
-                    savedInstanceState.getParcelableArray(RESULT_CACHE_KEY));
-        }
+            (new Thread() {
+                public void run() {
+                    movieAdaptor.setResults((Result[])
+                            savedInstanceState.getParcelableArray(RESULT_CACHE_KEY));
+                    sortOrder = savedInstanceState.getString(RESULT_CACHE_KEY);
+                    if(sortOrder != null) {
+                        if(sortOrder.equals(getString(R.string.pref_sort_order_most_popular_value))) {
+                            setTitle(getString(R.string.pref_sort_order_most_popular_label));
+                        } else {
+                            setTitle(getString(R.string.pref_sort_order_top_rated_label));
+                        }
+                    } else {
+                        setTitle(getString(R.string.pref_sort_order_default));
+                    }
 
-        Animation animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        View view = findViewById(R.id.container);
-        view.startAnimation(animFadeIn);
+                    Animation animFadeIn = AnimationUtils.loadAnimation(
+                            MovieActivity.this, R.anim.fade_in);
+                    View view = findViewById(R.id.container);
+                    view.startAnimation(animFadeIn);
+                }
+            }).start();
+        }
     }
 
     @Override
@@ -114,6 +131,7 @@ public class MovieActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArray(RESULT_CACHE_KEY, movieAdaptor.getResults());
+        outState.putString(RESULT_CACHE_KEY, sortOrder);
         super.onSaveInstanceState(outState);
     }
 

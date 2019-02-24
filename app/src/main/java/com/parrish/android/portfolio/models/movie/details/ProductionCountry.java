@@ -3,6 +3,7 @@ package com.parrish.android.portfolio.models.movie.details;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@SuppressWarnings("unused")
 public class ProductionCountry {
     @SerializedName("iso_3166_1")
     @Expose

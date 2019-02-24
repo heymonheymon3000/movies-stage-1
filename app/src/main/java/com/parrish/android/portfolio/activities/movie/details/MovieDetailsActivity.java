@@ -141,6 +141,7 @@ public class MovieDetailsActivity extends AppCompatActivity
                         (com.parrish.android.portfolio.models.movie.details.Result[])
                                 savedInstanceState.getParcelableArray(RESULT_CACHE_KEY);
                 movieTrailersAdaptor.setResults(cache);
+                assert cache != null;
                 if(cache.length == 0) {
                     trailersTextView.setVisibility(View.INVISIBLE);
                 } else {
@@ -218,18 +219,15 @@ public class MovieDetailsActivity extends AppCompatActivity
 
                 @Override
                 public void onComplete() {
+                    //noinspection ToArrayCallWithZeroLengthArrayArgument
                     movieTrailersAdaptor.setResults(resultCache
                         .toArray(new com.parrish.android.portfolio.models.movie.details.Result[resultCache.size()]));
                 }
 
                 private void setResultCache(MovieVideoResponse movieVideoResponse) {
-                    resultCache = movieVideoResponse.getResults().stream().filter(result -> {
-                        if(result.getType().equals(getString(R.string.trailer))) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }).collect(Collectors.toList());
+                    resultCache = movieVideoResponse.getResults().stream()
+                        .filter(result -> result.getType()
+                            .equals(getString(R.string.trailer))).collect(Collectors.toList());
 
                     if(resultCache.size() == 0) {
                         trailersTextView.setVisibility(View.INVISIBLE);
@@ -269,19 +267,16 @@ public class MovieDetailsActivity extends AppCompatActivity
 
                 @Override
                 public void onComplete() {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(runTime);
-                    sb.append("min ");
-                    movieDuration.setText(sb.toString());
+                    String sb = String.valueOf(runTime) +
+                            "min ";
+                    movieDuration.setText(sb);
                 }
             });
     }
 
     private String getVoteAverage(Double voteAverage) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(voteAverage);
-        sb.append("/");
-        sb.append(10);
-        return sb.toString();
+        return String.valueOf(voteAverage) +
+                "/" +
+                10;
     }
 }

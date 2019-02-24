@@ -3,6 +3,7 @@ package com.parrish.android.portfolio.models.movie.details;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@SuppressWarnings("ALL")
 public class Genre {
     @SerializedName("id")
     @Expose

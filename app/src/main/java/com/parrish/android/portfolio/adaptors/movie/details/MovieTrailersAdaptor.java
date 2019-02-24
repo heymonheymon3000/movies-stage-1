@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 
 public class MovieTrailersAdaptor extends
         RecyclerView.Adapter<MovieTrailersAdaptor.MovieTrailersViewHolder> {
+    @SuppressWarnings("unused")
     private final static String TAG = MovieTrailersAdaptor.class.getSimpleName();
 
     private Result[] mResults;
@@ -49,12 +50,8 @@ public class MovieTrailersAdaptor extends
     public void onBindViewHolder(@NonNull MovieTrailersViewHolder movieTrailersViewHolder, int i) {
         Result result = mResults[i];
         movieTrailersViewHolder.trailerTitle.setText(result.getName().trim());
-        movieTrailersViewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mTrailerClickListener.onTrailerClickListener(result);
-            }
-        });
+        movieTrailersViewHolder.imageView.setOnClickListener(
+            view -> mTrailerClickListener.onTrailerClickListener(result));
     }
 
     @Override
@@ -79,6 +76,7 @@ public class MovieTrailersAdaptor extends
         @BindView(R.id.trailer_title)
         public TextView trailerTitle;
 
+        @SuppressWarnings("WeakerAccess")
         public MovieTrailersViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

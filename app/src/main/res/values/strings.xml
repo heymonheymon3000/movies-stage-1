@@ -8,7 +8,6 @@
     <string name="trailers">Trailers:</string>
     <string name="movie_details">Movie Details</string>
 
-
     <!--settings-->
     <string name="action_settings">Settings</string>
 
@@ -20,4 +19,6 @@
     <string name="pref_sort_order_most_popular_value" translatable="false">popular</string>
     <string name="pref_sort_order_top_rated_value" translatable="false">top_rated</string>
     <string name="pref_sort_order_default" translatable="false">@string/pref_sort_order_most_popular_value</string>
+
+
 </resources>

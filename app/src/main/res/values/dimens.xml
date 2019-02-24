@@ -32,6 +32,12 @@
     <dimen name="mv_description_text_size">12sp</dimen>
     <dimen name="trailer_tv_text_size">14sp</dimen>
     <dimen name="mv_rating_text_size">10sp</dimen>
+    <dimen name="mv_details_title_padding">24dp</dimen>
+    <dimen name="mv_details_title_text_size">24sp</dimen>
+    <dimen name="mv_details_title_min_height">90dp</dimen>
+    <dimen name="mv_details_title_elevation">16dp</dimen>
+
+
 
     <!--movie_trailer_list_item.xml-->
     <dimen name="trailers_ll_margin_top">8dp</dimen>

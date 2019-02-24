@@ -34,7 +34,8 @@
         android:layout_marginBottom="@dimen/mv_thumbnail_margin_bottom"
         android:elevation="@dimen/mv_thumbnail_elevation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_details_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/movie_details_title"
+        android:contentDescription="@string/movie_thumbnail" />
 
     <TextView
         android:id="@+id/movie_year"

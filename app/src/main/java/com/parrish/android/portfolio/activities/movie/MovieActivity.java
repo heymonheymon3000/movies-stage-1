@@ -155,13 +155,10 @@ public class MovieActivity extends AppCompatActivity
                         Toast.LENGTH_LONG).show();
                 }
 
+                @SuppressWarnings("ToArrayCallWithZeroLengthArrayArgument")
                 @Override
                 public void onComplete() {
-                    Result[] r = new Result[results.size()];
-                    for(int i = 0; i < results.size(); i++) {
-                        r[i] = results.get(i);
-                    }
-                    movieAdaptor.setResults(r);
+                    movieAdaptor.setResults(results.toArray(new Result[results.size()]));
                     setTitle(getTitle());
                 }
 

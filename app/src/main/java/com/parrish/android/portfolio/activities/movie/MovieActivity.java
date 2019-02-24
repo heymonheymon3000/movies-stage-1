@@ -56,7 +56,6 @@ public class MovieActivity extends AppCompatActivity
     private final static String RESULT_CACHE_KEY = "RESULT_CACHE_KEY";
     private final static String SORT_ORDER_KEY = "SORT_ORDER_KEY";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,32 +64,10 @@ public class MovieActivity extends AppCompatActivity
         setupSharedPreferences();
         setupRecyclerView();
 
-        loadMovies();
-
         if(savedInstanceState == null || !savedInstanceState.containsKey(RESULT_CACHE_KEY)) {
             loadMovies();
         } else {
-            (new Thread() {
-                public void run() {
-                    movieAdaptor.setResults((Result[])
-                            savedInstanceState.getParcelableArray(RESULT_CACHE_KEY));
-                    sortOrder = savedInstanceState.getString(RESULT_CACHE_KEY);
-                    if(sortOrder != null) {
-                        if(sortOrder.equals(getString(R.string.pref_sort_order_most_popular_value))) {
-                            setTitle(getString(R.string.pref_sort_order_most_popular_label));
-                        } else {
-                            setTitle(getString(R.string.pref_sort_order_top_rated_label));
-                        }
-                    } else {
-                        setTitle(getString(R.string.pref_sort_order_default));
-                    }
-
-                    Animation animFadeIn = AnimationUtils.loadAnimation(
-                            MovieActivity.this, R.anim.fade_in);
-                    View view = findViewById(R.id.container);
-                    view.startAnimation(animFadeIn);
-                }
-            }).start();
+            loadMoviesFromCache(savedInstanceState);
         }
     }
 
@@ -131,7 +108,7 @@ public class MovieActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArray(RESULT_CACHE_KEY, movieAdaptor.getResults());
-        outState.putString(RESULT_CACHE_KEY, sortOrder);
+        outState.putString(SORT_ORDER_KEY, sortOrder);
         super.onSaveInstanceState(outState);
     }
 
@@ -196,6 +173,30 @@ public class MovieActivity extends AppCompatActivity
                     }
                 }
             });
+    }
+
+    private void loadMoviesFromCache(Bundle savedInstanceState) {
+        (new Thread() {
+            public void run() {
+                movieAdaptor.setResults((Result[])
+                        savedInstanceState.getParcelableArray(RESULT_CACHE_KEY));
+                sortOrder = savedInstanceState.getString(SORT_ORDER_KEY);
+                if(sortOrder != null) {
+                    if(sortOrder.equals(getString(R.string.pref_sort_order_most_popular_value))) {
+                        setTitle(getString(R.string.pref_sort_order_most_popular_label));
+                    } else {
+                        setTitle(getString(R.string.pref_sort_order_top_rated_label));
+                    }
+                } else {
+                    setTitle(getString(R.string.pref_sort_order_default));
+                }
+
+                Animation animFadeIn = AnimationUtils.loadAnimation(
+                        MovieActivity.this, R.anim.fade_in);
+                View view = findViewById(R.id.container);
+                view.startAnimation(animFadeIn);
+            }
+        }).start();
     }
 
     @Override

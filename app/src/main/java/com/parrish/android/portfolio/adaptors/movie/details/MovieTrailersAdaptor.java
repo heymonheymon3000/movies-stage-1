@@ -49,7 +49,7 @@ public class MovieTrailersAdaptor extends
     @Override
     public void onBindViewHolder(@NonNull MovieTrailersViewHolder movieTrailersViewHolder, int i) {
         Result result = mResults[i];
-        movieTrailersViewHolder.trailerTitle.setText(result.getName());
+        movieTrailersViewHolder.trailerTitle.setText(result.getName().trim());
     }
 
     @Override

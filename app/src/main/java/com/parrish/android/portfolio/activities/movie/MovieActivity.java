@@ -199,7 +199,8 @@ public class MovieActivity extends AppCompatActivity
     @Override
     public void onMovieClickListener(Result result, View view) {
         Pair<View, String> p1 = Pair.create(view, result.getTitle());
-        @SuppressWarnings("unchecked") ActivityOptionsCompat options =
+        @SuppressWarnings("unchecked")
+        ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(this, p1);
         Intent startMovieDetailsActivity = new Intent(this, MovieDetailsActivity.class);
         startMovieDetailsActivity.putExtra(Intent.EXTRA_TEXT, result);
